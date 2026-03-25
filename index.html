@@ -285,5 +285,102 @@
   <div class="footer-right"><a href="#">Contact <span class="arrow">↗</span></a></div>
 </div>
 
+<style>
+  /* ── SCROLL ANIMATION ──────────────────────────────────────────
+     Two things animate as the user scrolls down:
+     1. The gradient fades to near-white via a fixed overlay
+     2. All red text (#e8140a) interpolates toward near-black (#1c1c1c)
+     Layout, spacing, and structure are completely untouched.
+  ────────────────────────────────────────────────────────────── */
+
+  /* Fixed white overlay — sits above the gradient, below content */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: #f0eeec;
+    opacity: var(--scroll-white, 0);
+    pointer-events: none;
+  }
+
+  /* Ensure all content sits above the overlay */
+  .page-hero, .content, .footer-row { position: relative; z-index: 1; }
+
+  /* Text color driven by --ink-r/g/b custom properties (set by JS) */
+  :root {
+    --ink-r: 232;
+    --ink-g: 20;
+    --ink-b: 10;
+  }
+
+  /* Override --fg / --ink / --muted / --rule to use the interpolated value */
+  body {
+    color: rgb(var(--ink-r), var(--ink-g), var(--ink-b));
+  }
+
+  /* Every element that references var(--fg) or var(--ink) inherits from body,
+     but some elements set color explicitly — cover them all here */
+  a,
+  h1,
+  .nav-site, .nav-title, .nav-meta, .nav-links,
+  .hero-block, .hero-block-name, .hero-block-desc, .hero-block-link,
+  .sec-body, .sec-body p, .btn,
+  .footer-left, .footer-right, .footer-right a {
+    color: rgb(var(--ink-r), var(--ink-g), var(--ink-b));
+    transition: color 0.08s linear;
+  }
+
+  /* Rules and borders that use --rule / --muted */
+  .hero-blocks,
+  .hero-block,
+  .section,
+  .items li,
+  .footer-row {
+    border-color: rgba(var(--ink-r), var(--ink-g), var(--ink-b), 0.2);
+    transition: border-color 0.08s linear;
+  }
+
+  .items li::before {
+    color: rgba(var(--ink-r), var(--ink-g), var(--ink-b), 0.5);
+  }
+</style>
+
+<script>
+  (function () {
+    const ROOT = document.documentElement;
+
+    // Start color: #e8140a
+    const R0 = 232, G0 = 20,  B0 = 10;
+    // End color:   #1c1c1c
+    const R1 = 28,  G1 = 28,  B1 = 28;
+
+    // Transition completes over this many px of scroll
+    // (1.5 × viewport height feels natural on this page length)
+    function transitionLength() { return window.innerHeight * 1.5; }
+
+    function easeInOut(t) { return t < 0.5 ? 2*t*t : -1 + (4 - 2*t)*t; }
+
+    let raf = false;
+
+    function update() {
+      const t = easeInOut(Math.min(window.scrollY / transitionLength(), 1));
+
+      ROOT.style.setProperty('--scroll-white', (t * 0.92).toFixed(4)); // max 92% white
+      ROOT.style.setProperty('--ink-r', Math.round(R0 + (R1 - R0) * t));
+      ROOT.style.setProperty('--ink-g', Math.round(G0 + (G1 - G0) * t));
+      ROOT.style.setProperty('--ink-b', Math.round(B0 + (B1 - B0) * t));
+
+      raf = false;
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!raf) { raf = true; requestAnimationFrame(update); }
+    }, { passive: true });
+
+    update(); // init
+  })();
+</script>
+
 </body>
 </html>
