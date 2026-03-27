@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources — Design & Digital Autonomies</title>
+<style>
+  @font-face {
+    font-family: 'Monument Grotesk';
+    src: url('MonumentGrotesk-Medium.woff2') format('woff2'),
+         url('MonumentGrotesk-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --g: 1rem;
+    --fg: #e8140a;
+    --muted: #e8140a;
+    --rule: rgba(232,20,10,0.2);
+  }
+
+  body {
+    background:
+      radial-gradient(ellipse 80% 55% at 0% 0%,   rgba(160,195,230,1)   0%, transparent 55%),
+      radial-gradient(ellipse 60% 60% at 100% 0%,  rgba(170,230,195,0.9) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 50% at 100% 55%, rgba(190,220,185,0.8) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 45% at 45% 85%,  rgba(210,185,230,0.9) 0%, transparent 50%),
+      radial-gradient(ellipse 35% 35% at 55% 75%,  rgba(215,240,205,0.8) 0%, transparent 40%);
+    background-color: #adc6db;
+    background-attachment: fixed;
+    color: var(--fg);
+    font-family: 'Monument Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    min-height: 100vh;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .row {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: var(--g);
+    padding: 0 var(--g);
+  }
+
+  /* ── HEADER ZONE ── */
+  .header-zone {
+    position: relative;
+  }
+
+  nav {
+    padding-top: 1.1rem;
+    padding-bottom: 1.1rem;
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+
+  .nav-site   { grid-column: span 3; }
+  .nav-title  { grid-column: span 4; }
+  .nav-meta   { grid-column: span 4; color: var(--fg); }
+  .nav-links  { grid-column: span 1; text-align: right; }
+  .arrow { font-size: 0.6rem; vertical-align: super; }
+
+  /* ── PAGE HEADER ── */
+  .page-header .row {
+    align-items: end;
+    padding-top: 2.4rem;
+    padding-bottom: 1.6rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .page-label {
+    grid-column: span 3;
+    font-size: 0.75rem;
+    color: var(--fg);
+  }
+
+  .page-title {
+    grid-column: span 6;
+    font-size: clamp(2.2rem, 5vw, 5vw);
+    font-weight: 500;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+  }
+
+  .page-desc {
+    grid-column: span 3;
+    font-size: 0.75rem;
+    color: var(--fg);
+    line-height: 1.55;
+  }
+
+  /* ── READING LIST ── */
+  .content {
+    background: transparent;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    padding: 1rem var(--g) 0.6rem;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .section-header h2 {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--fg);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .section-header span {
+    font-size: 0.68rem;
+    color: var(--fg);
+  }
+
+  /* ── READING ITEM ── */
+  .reading-list { }
+
+  .reading-item {
+    border-bottom: 1px solid var(--rule);
+    padding-top: 1rem;
+    padding-bottom: 1.1rem;
+    align-items: start;
+    font-size: 0.8rem;
+  }
+
+  .r-index {
+    grid-column: span 1;
+    color: var(--fg);
+    font-size: 0.65rem;
+    padding-top: 0.1rem;
+  }
+
+  .r-main {
+    grid-column: span 8;
+    line-height: 1.35;
+  }
+
+  .r-extract {
+    display: block;
+    font-size: clamp(0.85rem, 1.15vw, 1.15vw);
+    line-height: 1.65;
+    color: var(--fg);
+    font-style: italic;
+    margin-bottom: 0.75rem;
+  }
+
+  .r-meta {
+    display: block;
+  }
+
+  .r-title {
+    display: inline;
+    font-size: 0.72rem;
+    font-style: normal;
+  }
+
+  .r-author {
+    display: inline;
+    color: var(--fg);
+    font-size: 0.72rem;
+    font-style: normal;
+  }
+
+  .r-author::before {
+    content: " — ";
+    color: var(--fg);
+  }
+
+  .r-year {
+    grid-column: span 1;
+    color: var(--fg);
+    font-size: 0.7rem;
+    text-align: right;
+    padding-top: 0.1rem;
+  }
+
+  /* ── FOOTER ── */
+  .footer-row {
+    padding: 1.2rem var(--g);
+    border-top: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: var(--g);
+    font-size: 0.72rem;
+    color: var(--fg);
+    background: #d0c4e8;
+  }
+
+  .footer-left  { grid-column: span 10; }
+  .footer-right { grid-column: span 2; text-align: right; color: var(--fg); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 700px) {
+    .nav-site  { grid-column: span 12; }
+    .nav-title { grid-column: span 12; margin-top: 0.3rem; }
+    .nav-meta  { grid-column: span 12; margin-top: 0.15rem; }
+    .nav-links { grid-column: span 12; text-align: left; margin-top: 0.3rem; }
+
+    .page-label { grid-column: span 12; }
+    .page-title { grid-column: span 12; }
+    .page-desc  { grid-column: span 12; margin-top: 0.8rem; }
+
+    .r-index  { grid-column: span 1; }
+    .r-main   { grid-column: span 11; }
+    .r-year   { display: none; }
+
+    .footer-left, .footer-right { grid-column: span 12; }
+    .footer-right { text-align: left; margin-top: 0.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ZONE ── -->
+<div class="header-zone">
+  <nav class="row">
+    <div class="nav-site"><a href="index.html">D&amp;DA</a></div>
+    <div class="nav-title">Design &amp; Digital Autonomies</div>
+    <div class="nav-meta">Open Research Platform</div>
+    <div class="nav-links"><a href="#">Contact <span class="arrow">↗</span></a></div>
+  </nav>
+  <div class="page-header">
+    <div class="row">
+      <div class="page-label">← <a href="index.html">Back</a></div>
+      <h1 class="page-title">Resources</h1>
+    </div>
+  </div>
+</div>
+
+<!-- ── CONTENT ── -->
+<div class="content">
+
+  <div class="reading-list">
+    <div class="reading-item row">
+      <div class="r-index">01</div>
+      <div class="r-main">
+        <span class="r-extract">"The word autonomy derives from the two Greek words auto ("self") and nomos ("law"). The term was originally applied to political entities in ancient Greece: An autonomous city-state, such as Athens, was one that laid down its own laws rather than having them imposed on it by some outside authority (e.g., by the Persians). Similarly, and as elaborated by the famous German philosopher Immanuel Kant, an autonomous person is someone who determines his or her own maxims or rules for action and acts in accordance with them. So an autonomous person, like an autonomous city-state or nation-state, is self-legislating."</span>
+        <span class="r-meta"><span class="r-title"><a href="https://doi.org/10.4135/9781483359922.n38">Autonomy, The SAGE Encyclopedia of Surveillance, Security, and Privacy</a></span><span class="r-author">S. R. M. Miller</span></span>
+      </div>
+      <div class="r-year">2018</div>
+    </div>
+    <div class="reading-item row">
+      <div class="r-index">02</div>
+      <div class="r-main">
+        <span class="r-extract">"Moral autonomy, usually traced back to Kant, is the capacity to deliberate and to give oneself the moral law, rather than merely heeding the injunctions of others. Personal autonomy is the capacity to decide for oneself and pursue a course of action in one's life, often regardless of any particular moral content. Political autonomy is the property of having one's decisions respected, honored, and heeded within a political context."</span>
+        <span class="r-meta"><span class="r-title"><a href="https://iep.utm.edu/autonomy/">Autonomy, Internet Encyclopedia of Philosophy</a></span><span class="r-author">Internet Encyclopedia of Philosophy</span></span>
+      </div>
+      <div class="r-year"></div>
+    </div>
+    <div class="reading-item row">
+      <div class="r-index">03</div>
+      <div class="r-main">
+        <span class="r-extract">"Even autonomous persons who have self-governing capacities and are, on the whole, good managers of their health sometimes fail to govern themselves in particular choices because of temporary constraints caused by illness, depression, ignorance, coercion, or other conditions that limit their judgment or their options. An autonomous person who signs a consent form for a procedure without reading or understanding the form has the capacity to act autonomously, but fails to so act in this circumstance."</span>
+        <span class="r-meta"><span class="r-title"><a href="https://archive.org/details/principlesofbiom0000beau_a3y5/page/n337/mode/2up">Principles of Biomedical Ethics</a></span><span class="r-author">Tom L. Beauchamp &amp; James F. Childress</span></span>
+      </div>
+      <div class="r-year">1979</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── FOOTER ── -->
+<div class="footer-row">
+  <div class="footer-left">Serena Cangiano &nbsp;·&nbsp; CC BY SA 2026</div>
+  <div class="footer-right"><a href="#">Contact <span class="arrow">↗</span></a></div>
+</div>
+
+<style>
+  /* ── SCROLL ANIMATION ──────────────────────────────────────────
+     As the user scrolls, a warm-white overlay fades in over the
+     gradient background, and all red text transitions to near-black.
+     No existing lines are touched — this block is append-only.
+  ────────────────────────────────────────────────────────────── */
+
+  /* Fixed warm-white overlay — above the gradient, below all content */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: #f0eeec;
+    opacity: var(--scroll-white, 0);
+    pointer-events: none;
+  }
+
+  /* Ensure all content sits above the overlay */
+  .header-zone, .content, .footer-row { position: relative; z-index: 1; }
+
+  /* Interpolated ink color driven by JS-updated custom properties */
+  :root {
+    --ink-r: 232;
+    --ink-g: 20;
+    --ink-b: 10;
+  }
+
+  body {
+    color: rgb(var(--ink-r), var(--ink-g), var(--ink-b));
+  }
+
+  /* Every element with an explicit color declaration */
+  a,
+  .nav-site, .nav-title, .nav-meta, .nav-links,
+  .page-label, .page-label a, .page-title, .page-desc,
+  .section-header h2, .section-header span,
+  .r-index, .r-extract, .r-title, .r-author, .r-year,
+  .footer-left, .footer-right, .footer-right a {
+    color: rgb(var(--ink-r), var(--ink-g), var(--ink-b));
+    transition: color 0.08s linear;
+  }
+
+  /* Borders and rules */
+  .page-header .row,
+  .section-header,
+  .reading-item,
+  .footer-row {
+    border-color: rgba(var(--ink-r), var(--ink-g), var(--ink-b), 0.2);
+    transition: border-color 0.08s linear;
+  }
+
+  /* The — separator before author names */
+  .r-author::before {
+    color: rgb(var(--ink-r), var(--ink-g), var(--ink-b));
+  }
+</style>
+
+<script>
+  (function () {
+    const ROOT = document.documentElement;
+
+    // Start: #e8140a  →  End: #1c1c1c
+    const R0 = 232, G0 = 20,  B0 = 10;
+    const R1 = 28,  G1 = 28,  B1 = 28;
+
+    // Transition completes over 1.5× viewport height
+    function transitionLength() { return window.innerHeight * 1.5; }
+
+    function easeInOut(t) { return t < 0.5 ? 2*t*t : -1 + (4 - 2*t)*t; }
+
+    let raf = false;
+
+    function update() {
+      const t = easeInOut(Math.min(window.scrollY / transitionLength(), 1));
+
+      ROOT.style.setProperty('--scroll-white', (t * 0.92).toFixed(4));
+      ROOT.style.setProperty('--ink-r', Math.round(R0 + (R1 - R0) * t));
+      ROOT.style.setProperty('--ink-g', Math.round(G0 + (G1 - G0) * t));
+      ROOT.style.setProperty('--ink-b', Math.round(B0 + (B1 - B0) * t));
+
+      raf = false;
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!raf) { raf = true; requestAnimationFrame(update); }
+    }, { passive: true });
+
+    update(); // init
+  })();
+</script>
+
+</body>
+</html>
